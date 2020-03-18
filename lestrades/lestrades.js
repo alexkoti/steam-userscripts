@@ -22,22 +22,26 @@
             var user_data = JSON.parse( responseDetails.responseText );
             var games_list = {};
             //console.log( user_data );
-            jQuery('.tradable-items li').each(function(){
+            jQuery('.gamelist .tradable-items li').each(function(){
                 //console.log( jQuery(this) );
                 var game    = jQuery(this);
                 var link    = game.find('a[title="Store page"]');
+                if( link.length < 1 ){
+                    return true;
+                }
+
                 var game_id = link.attr('href').replace('//store.steampowered.com/app/', '').replace('/', '');
 
                 games_list[game_id] = game;
+
+                console.log('-----');
+                console.log( game.find('.gdata > strong').text() );
 
                 // ignoreds
                 //console.log(game_id);
                 if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
                     console.log(game_id + ' ignored');
                     game.css('opacity', 0.2);
-                }
-                else{
-                    console.log(game_id + ' ok');
                 }
 
                 // owneds?
