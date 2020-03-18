@@ -20,21 +20,45 @@
             //console.log ("GM_xmlhttpRequest() response is:\n", responseDetails.responseText.substring (0, 80) + '...');
 
             var user_data = JSON.parse( responseDetails.responseText );
+            var games_list = {};
             //console.log( user_data );
             jQuery('.tradable-items li').each(function(){
                 //console.log( jQuery(this) );
-                var game = jQuery(this);
-                var link = game.find('a[title="Store page"]');
+                var game    = jQuery(this);
+                var link    = game.find('a[title="Store page"]');
                 var game_id = link.attr('href').replace('//store.steampowered.com/app/', '').replace('/', '');
-                console.log(game_id);
+
+                games_list[game_id] = game;
+
+                // ignoreds
+                //console.log(game_id);
                 if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
-                    console.log(game_id + ' ignorado');
+                    console.log(game_id + ' ignored');
                     game.css('opacity', 0.2);
                 }
                 else{
                     console.log(game_id + ' ok');
                 }
+
+                // owneds?
+                if( game.find('i.tli').length > 0 ){
+                    console.log(game_id + ' owned');
+                    game.css({
+                        'border': '1px solid green',
+                        'background-color': 'rgba(0, 128, 0, 0.5)',
+                        'opacity' : 1,
+                    });
+                }
+
+                // banned?
+                if( game.find('.cred:contains("↯")').length > 0 ){
+                    console.log(game_id + ' owned');
+                    game.css({
+                        'border-right': '10px solid yellow',
+                    });
+                }
             });
+            console.log(games_list);
         }
     } );
 })();
