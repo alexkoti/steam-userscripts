@@ -39,7 +39,7 @@
 
                 // ignoreds
                 //console.log(game_id);
-                if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
+                if( user_data.rgIgnoredApps.hasOwnProperty(game_id) || game.find('.tbl').length > 0 ){
                     console.log(game_id + ' ignored');
                     game.css('opacity', 0.2);
                 }
