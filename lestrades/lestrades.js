@@ -19,6 +19,9 @@
             // DO ALL RESPONSE PROCESSING HERE...
             //console.log ("GM_xmlhttpRequest() response is:\n", responseDetails.responseText.substring (0, 80) + '...');
 
+            var visited_link_styling = "<style>.bundle-list a:visited{ color:red; }</style>";
+            $('head').append( visited_link_styling );
+
             var user_data = JSON.parse( responseDetails.responseText );
             var games_list = {};
             //console.log( user_data );
