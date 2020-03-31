@@ -23,6 +23,26 @@
         add_custom_tag( tag );
     });
 
+    // adicionar links diretos para os vídeos
+    var videos = $('<div>');
+    videos.css({
+        'display':'flex',
+        'justify-content' : 'center',
+        'flex-wrap' : 'wrap',
+    });
+    $('.highlight_player_item.highlight_movie').each(function(){
+        var img = $('<img>');
+        img.attr('src', $(this).attr('data-poster'));
+        img.css('width', '100%');
+        var link = $('<a>');
+        img.appendTo(link);
+        link.attr('href', $(this).attr('data-webm-source'));
+        link.attr('target', '_blank');
+        link.css({'width':'20%'});
+        videos.append(link);
+    });
+    $('.highlight_ctn').append( videos );
+    $('.highlight_strip_movie').hide();
 
     function add_custom_tag( tag ){
         // custom tag
