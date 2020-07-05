@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         AHK - IsThereAnyDeal Hide Ignoreds
+// @name         AHK - IsThereAnyDeal Hide Owneds & Ignoreds
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  In ITAD, fade all games ignored by user in Steam.
@@ -20,7 +20,7 @@
             //console.log ("GM_xmlhttpRequest() response is:\n", responseDetails.responseText.substring (0, 80) + '...');
 
             var user_data = JSON.parse( responseDetails.responseText );
-            console.log( user_data );
+            console.log( user_data.rgOwnedApps[0] );
 
             var tbl = jQuery('#games');
             observeDOM( tbl[0], function(m){
@@ -33,8 +33,16 @@
                         game_id = game_id.replace('app/', '');
                     }
                     if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
-                        console.log('ignorado: ' + game_id);
+                        console.log( '❌ ignore:' + game_id );
                         game.css('opacity', 0.2);
+                    }
+                    if( user_data.rgOwnedApps.includes( Number(game_id) ) ){
+                        console.log( '✅ owned:' + game_id );
+                        game.css({
+                            'border': '1px solid green',
+                            'background-color': 'rgba(0, 128, 0, 0.5)',
+                            'opacity' : 0.5,
+                        });
                     }
                 });
             });
