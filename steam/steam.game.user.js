@@ -8,6 +8,11 @@
 // @grant        none
 // ==/UserScript==
 
+/**
+ * @todo scan user custom tags
+ * 
+ */
+
 (function() {
     'use strict';
 
