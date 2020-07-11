@@ -1,9 +1,12 @@
 // ==UserScript==
 // @name         AHK - Steamdb Sales Hide Ignoreds
-// @namespace    http://tampermonkey.net/
-// @version      0.1
+// @namespace    https://github.com/alexkoti/steam-userscripts
+// @version      1.0.0
 // @description  In steamdb sales, fade all games ignored by user in Steam.
 // @author       Alex Koti
+// @downloadURL  https://github.com/alexkoti/steam-userscripts/raw/master/steamdb/steamdb.user.js
+// @updateURL    https://github.com/alexkoti/steam-userscripts/raw/master/steamdb/steamdb.user.js
+// @supportURL   https://github.com/alexkoti/steam-userscripts/issues
 // @match        https://steamdb.info/sales/*
 // @grant        GM_xmlhttpRequest
 // @connect      steampowered.com

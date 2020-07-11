@@ -7,10 +7,12 @@ All scripts rely on access to your userdata json on Steam, located at https://st
 
 ## Steam Single Add Tags
 Site: https://store.steampowered.com/
-*-* Shortcuts to add your custom tags. No need to open lightbox.
+Install: https://github.com/alexkoti/steam-userscripts/raw/master/steam/steam.game.user.js
+- Shortcuts to add your custom tags. No need to open lightbox.
 
 ## Steam Search List Show User Custom Tags
 Site: https://store.steampowered.com/
+Install: https://github.com/alexkoti/steam-userscripts/raw/master/steam/steam.list.user.js
 * Hide ignored games (completely remove from page).
 * Autoload open all 4 game thumbnails and place below game info.
 * Show 3 button actions:
@@ -21,18 +23,22 @@ Site: https://store.steampowered.com/
 
 ## Steamdb Sales Hide Ignoreds
 Site: https://steamdb.info/sales/
+Install: https://github.com/alexkoti/steam-userscripts/raw/master/steamdb/steamdb.user.js
 * Fade ignored games (games still in list)
 
 ## Steamgifts Check Ignoreds
 Site: https://www.steamgifts.com/
+Install: https://github.com/alexkoti/steam-userscripts/raw/master/steamgifts/steamgifts.user.js
 * add thick border to eye(👁) button, so you can easily hide them
 
 ## IsThereAnyDeal Hide Owneds & Ignoreds
 Site: https://isthereanydeal.com/
+Install: https://github.com/alexkoti/steam-userscripts/raw/master/isthereanydeal/itad.js
 * Fade ignored games (games still in list)
 
 ## Lestrades Hide Ignoreds
 Site: https://lestrades.com/
+Install: https://github.com/alexkoti/steam-userscripts/raw/master/lestrades/lestrades.js
 * Highlight with green background games owned
 * Fade ignored games (games still in list)
 * Add yellow border in right, in games not present on Steam Store anymore. Apply to removed, purchase disabled or banned games.
