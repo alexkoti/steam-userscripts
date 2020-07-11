@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         AHK - Steamgifts Check Ignoreds
 // @namespace    https://github.com/alexkoti/steam-userscripts
+// @homepage     https://github.com/alexkoti/steam-userscripts
 // @version      1.0.0
 // @description  In steamgifts, mark all ignored games by user in Steam with red border in eye(hide) button.
 // @author       Alex Koti

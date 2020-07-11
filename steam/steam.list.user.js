@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         AHK - Steam Search List Show User Custom Tags
 // @namespace    https://github.com/alexkoti/steam-userscripts
+// @homepage     https://github.com/alexkoti/steam-userscripts
 // @version      1.0.0
 // @description  Show custom tags applied by user; show game thumbs below game info (🔄 reload thumbs); show ❌ buttom to ignore game;
 // @author       Alex Koti

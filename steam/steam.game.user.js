@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         AHK - Steam Single Add Tags
 // @namespace    https://github.com/alexkoti/steam-userscripts
+// @homepage     https://github.com/alexkoti/steam-userscripts
 // @version      1.0.0
 // @description  Custom user tags shortcut in individual game page.
 // @author       Alex Koti

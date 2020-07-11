@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name         AHK - IsThereAnyDeal Hide Owneds & Ignoreds
 // @namespace    https://github.com/alexkoti/steam-userscripts
+// @homepage     https://github.com/alexkoti/steam-userscripts
 // @version      1.0.0
 // @description  In ITAD, fade all games ignored by user in Steam.
 // @author       Alex Koti
