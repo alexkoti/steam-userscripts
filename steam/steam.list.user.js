@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name         AHK - Steam Search List Show User Custom Tags
 // @namespace    https://github.com/alexkoti/steam-userscripts
-// @homepage     https://github.com/alexkoti/steam-userscripts
 // @version      1.0.0
 // @description  Show custom tags applied by user; show game thumbs below game info (🔄 reload thumbs); show ❌ buttom to ignore game;
 // @author       Alex Koti
@@ -18,6 +17,8 @@
 
     //console.log(g_sessionID);
     var $ = window.jQuery;
+
+    var requests = [];
 
     function update_user_tags(){
         console.log('update_user_tags');
@@ -54,10 +55,21 @@
                 console.log( '❌ ignore:' + title );
                 return;
             }
+
             var game_link = row.attr('href');
+            if( game_link.includes('https://store.steampowered.com/sub/') ){
+                return;
+            }
             var appID     = row.attr('data-ds-appid');
+
+            if( row.attr('data-request-init') == 1 ){
+                console.log('já iniciado');
+                return;
+            }
+            row.attr('data-request-init', 1);
+
             console.log( '⚡ check: ' + title );
-            $.ajax({
+            var request = $.ajax({
                 url: game_link,
                 type: 'GET',
                 dataFilter: function (res, type) {
@@ -102,37 +114,39 @@
                     }
 
                     // add ignore button ❌
-                    var btn_ignore = $('<div class="ignore" style="position: absolute;top: 0;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">❌</div>');
-                    btn_ignore.on('click', function(event){
-                        event.preventDefault();
-                        console.log('ignore!');
-                        $.ajax({
-                            type: "POST",
-                            url: 'https://store.steampowered.com/recommended/ignorerecommendation/',
-                            dataType: "json",
-                            data: {
-                                'sessionid' : g_sessionID,
-                                'appid'     : appID,
-                                'remove'    : 0
-                            },
-                            success: function(ig_resp){
-                                //console.log( ig_resp );
-                                if( ig_resp.success == true ){
-                                    // hide ignore button
-                                    btn_ignore.hide();
-                                    // add ignore class
-                                    row.addClass('ds_ignored');
-                                    // remover thumbs
-                                    row.find('.hover_screenshots').remove();
+                    if( !game_link.includes('https://store.steampowered.com/sub/') ){
+                        var btn_ignore = $('<div class="ignore" style="position: absolute;top: 0;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">❌</div>');
+                        btn_ignore.on('click', function(event){
+                            event.preventDefault();
+                            console.log('ignore!');
+                            $.ajax({
+                                type: "POST",
+                                url: 'https://store.steampowered.com/recommended/ignorerecommendation/',
+                                dataType: "json",
+                                data: {
+                                    'sessionid' : g_sessionID,
+                                    'appid'     : appID,
+                                    'remove'    : 0
+                                },
+                                success: function(ig_resp){
+                                    //console.log( ig_resp );
+                                    if( ig_resp.success == true ){
+                                        // hide ignore button
+                                        btn_ignore.hide();
+                                        // add ignore class
+                                        row.addClass('ds_ignored');
+                                        // remover thumbs
+                                        row.find('.hover_screenshots').remove();
+                                    }
+                                },
+                                error: function (xhr, ajaxOptions, thrownError) {
+                                    alert(xhr.status);
+                                    alert(thrownError);
                                 }
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                alert(xhr.status);
-                                alert(thrownError);
-                            }
+                            });
                         });
-                    });
-                    btn_ignore.appendTo( row );
+                        btn_ignore.appendTo( row );
+                    }
 
                     // find game thumbnails
                     if( get_thumbs == true ){
@@ -201,6 +215,8 @@
 
                 }
             });
+            console.log(request);
+            requests.push(request);
         });
     }
 
@@ -216,6 +232,9 @@
         console.log('reload tags!');
         // reload
         setTimeout(function(){
+            $.each( requests, function( key, req ) {
+                req.abort();
+            });
             update_user_tags();
         }, 5000);
     });
