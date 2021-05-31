@@ -56,11 +56,17 @@
                 return;
             }
 
+            // link da página individual
             var game_link = row.attr('href');
+
+            // check if is package
+            var is_sub = false;
             if( game_link.includes('https://store.steampowered.com/sub/') ){
-                return;
+                is_sub = true;
             }
-            var appID     = row.attr('data-ds-appid');
+
+            // app ID
+            var appID = row.attr('data-ds-appid');
 
             if( row.attr('data-request-init') == 1 ){
                 console.log('já iniciado');
@@ -74,17 +80,43 @@
                 type: 'GET',
                 dataFilter: function (res, type) {
                     res = res.replace(/<script/ig, '<div class="iscript"').replace(/<\/script>/ig, '</div>');
+                    //console.log(res);
                     return res;
                 },
                 success: function(res) {
                     var get_thumbs = true;
 
-                    if( row.find('.title').text() == 'AAAAAA' ){
-                        return;
+                    // verificar se todos os subs do pacote estão ignorados
+                    if( is_sub == true ){
+                        var check_sub = $.ajax({
+                            url: 'https://store.steampowered.com/dynamicstore/userdata/',
+                            type: 'GET',
+                            success: function(user_data){
+                                console.log(user_data);
+                                // buscar games da sub
+                                var sub_total = 0;
+                                var sub_ignoreds = 0;
+                                $(res).find('.game_description_column .tab_item').each(function(){
+                                    var sub_id = $(this).attr('data-ds-appid');
+                                    if( user_data.rgIgnoredApps.hasOwnProperty(sub_id) ){
+                                        console.log('ignore sub: ' + sub_id);
+                                        sub_ignoreds++;
+                                    }
+                                    sub_total++;
+                                });
+                                //console.log('sub_total: ' + sub_total);
+                                //console.log('sub_ignoreds: ' + sub_ignoreds);
+                                if( sub_total == sub_ignoreds ){
+                                    console.log('esconder pacote');
+                                    var get_thumbs = false;
+                                    row.hide();
+                                }
+                            }
+                        });
                     }
-                    else{
-                        //console.log(res);
-                        //console.log(1);
+
+                    // buscar tags de usuário
+                    if( is_sub == false ){
                         $(res).find('.iscript').each(function(s){
                             var test = $(this).text();
                             //console.log( $(this).text() );
@@ -104,9 +136,9 @@
                                         tag_pos.append('<span class="app_tag">' + v.name + "<span>");
 
                                         // sinalizar para não pedir thumbs
-                                        if( v.name == 'nice' ){
-                                            get_thumbs = false;
-                                        }
+                                        //if( v.name == 'nice' ){
+                                        //    get_thumbs = false;
+                                        //}
                                     });
                                 }
                             }
@@ -114,7 +146,7 @@
                     }
 
                     // add ignore button ❌
-                    if( !game_link.includes('https://store.steampowered.com/sub/') ){
+                    if( is_sub == false ){
                         var btn_ignore = $('<div class="ignore" style="position: absolute;top: 0;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">❌</div>');
                         btn_ignore.on('click', function(event){
                             event.preventDefault();
@@ -149,68 +181,68 @@
                     }
 
                     // find game thumbnails
-                    if( get_thumbs == true ){
-                    console.log('find thumbs');
-                    $.ajax({
-                        url: 'https://store.steampowered.com/apphover/' + appID,
-                        type: 'GET',
-                        success: function(gres) {
-                            console.log('thumbs!!!');
-                            var thumbs = $(gres).find('.hover_screenshots');
-                            // hover_screenshots div
-                            thumbs.css({
-                                //'overflow' : 'hidden',
-                                'position' : 'relative',
-                                'width'    : '100%',
-                                'height'   : '100px',
-                                'margin'   : '0 0 30px',
-                                'display'  : 'block',
-                            });
-                            // each screenshot
-                            thumbs.find('.screenshot').css({
-                                'position'       : 'relative',
-                                'width'          : '25%',
-                                'height'         : 'auto',
-                                'animation'      : 'none',
-                                'outline'        : '5px solid #16202d',
-                                'outline-offset' : '-5px',
-                                'float'          : 'left',
-                                'opacity'        : 1
-                            }).each(function(){
-                                var bg = $(this).css('background-image');
-                                bg = bg.replace('url(','').replace(')','').replace(/\"/gi, "");
-                                var img = $('<img />');
-                                img.attr('src', bg).css('width', '100%');
-                                img.appendTo( $(this) );
-                                img.error(function(){
-                                    var new_src = bg + Date.now();
-                                    img.attr('src', new_src);
-                                    console.log( 'nova imagem: ' + new_src );
+                    if( get_thumbs == true && is_sub == false ){
+                        console.log('find thumbs');
+                        $.ajax({
+                            url: 'https://store.steampowered.com/apphover/' + appID,
+                            type: 'GET',
+                            success: function(gres) {
+                                console.log('thumbs!!!');
+                                var thumbs = $(gres).find('.hover_screenshots');
+                                // hover_screenshots div
+                                thumbs.css({
+                                    //'overflow' : 'hidden',
+                                    'position' : 'relative',
+                                    'width'    : '100%',
+                                    'height'   : '100px',
+                                    'margin'   : '0 0 30px',
+                                    'display'  : 'block',
                                 });
-                            });
-                            // append screenshots
-                            thumbs.appendTo( row );
-
-                            // botão de remover thumbs ⏹️
-                            var remove_thumbs = $('<div class="ignore" style="position: absolute;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">⏹️</div>');
-                            remove_thumbs.on('click', function(event){
-                                event.preventDefault();
-                                console.log('stop thumbs! ' + appID);
-                                thumbs.remove();
-                            }).appendTo( thumbs );
-
-                            // botão reload thumbs 🔄
-                            var reload_thumbs = $('<div class="ignore" style="position: absolute;top: 45px;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">🔄</div>');
-                            reload_thumbs.on('click', function(event){
-                                event.preventDefault();
-                                console.log('reload thumbs! ' + appID);
-                                thumbs.find('.screenshot img').each(function(){
-                                    var osrc = $(this).attr('src');
-                                    $(this).attr('src', osrc + Date.now());
+                                // each screenshot
+                                thumbs.find('.screenshot').css({
+                                    'position'       : 'relative',
+                                    'width'          : '25%',
+                                    'height'         : 'auto',
+                                    'animation'      : 'none',
+                                    'outline'        : '5px solid #16202d',
+                                    'outline-offset' : '-5px',
+                                    'float'          : 'left',
+                                    'opacity'        : 1
+                                }).each(function(){
+                                    var bg = $(this).css('background-image');
+                                    bg = bg.replace('url(','').replace(')','').replace(/\"/gi, "");
+                                    var img = $('<img />');
+                                    img.attr('src', bg).css('width', '100%');
+                                    img.appendTo( $(this) );
+                                    img.error(function(){
+                                        var new_src = bg + Date.now();
+                                        img.attr('src', new_src);
+                                        console.log( 'nova imagem: ' + new_src );
+                                    });
                                 });
-                            }).appendTo( thumbs );
-                        }
-                    });
+                                // append screenshots
+                                thumbs.appendTo( row );
+
+                                // botão de remover thumbs ⏹️
+                                var remove_thumbs = $('<div class="ignore" style="position: absolute;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">⏹️</div>');
+                                remove_thumbs.on('click', function(event){
+                                    event.preventDefault();
+                                    console.log('stop thumbs! ' + appID);
+                                    thumbs.remove();
+                                }).appendTo( thumbs );
+
+                                // botão reload thumbs 🔄
+                                var reload_thumbs = $('<div class="ignore" style="position: absolute;top: 45px;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">🔄</div>');
+                                reload_thumbs.on('click', function(event){
+                                    event.preventDefault();
+                                    console.log('reload thumbs! ' + appID);
+                                    thumbs.find('.screenshot img').each(function(){
+                                        var osrc = $(this).attr('src');
+                                        $(this).attr('src', osrc + Date.now());
+                                    });
+                                }).appendTo( thumbs );
+                            }
+                        });
                     } // get_thumbs
 
                 }
