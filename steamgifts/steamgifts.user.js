@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name         AHK - Steamgifts Check Ignoreds
 // @namespace    https://github.com/alexkoti/steam-userscripts
-// @homepage     https://github.com/alexkoti/steam-userscripts
 // @version      1.0.0
 // @description  In steamgifts, mark all ignored games by user in Steam with red border in eye(hide) button.
 // @author       Alex Koti
@@ -33,7 +32,7 @@
                 console.log(game_id);
                 if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
                     console.log(game_id + ' ignorado');
-                    game.find('.giveaway__hide').css('border', '10px solid red');
+                    game.hide().find('.giveaway__hide').css('border', '10px solid red');
                 }
                 else{
                     console.log(game_id + ' ok');

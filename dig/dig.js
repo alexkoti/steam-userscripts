@@ -4,7 +4,7 @@
 // @version      0.1
 // @description  try to take over the world!
 // @author       Alex Koti
-// @match        http://www.dailyindiegame.com/
+// @match        http://www.dailyindiegame.com/*
 // @grant        GM_xmlhttpRequest
 // @connect      steampowered.com
 // ==/UserScript==
@@ -21,18 +21,22 @@
 
             var user_data = JSON.parse( responseDetails.responseText );
             console.log( user_data );
-            jQuery('#TableKeys > tr').each(function(){
-                //console.log( jQuery(this) );
+            jQuery('#TableKeys > tbody > tr').each(function(){
                 var game = jQuery(this);
+                //console.log( game );
                 var link = game.find('td:nth-child(4) > a:first');
-                var game_id = link.attr('href').replace('https://store.steampowered.com/app/', '').replace('/', '');
-                console.log(game_id);
-                if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
-                    console.log(game_id + ' ignorado');
-                    game.closest('td').css('border', '10px solid red');
-                }
-                else{
-                    console.log(game_id + ' ok');
+                if( link.length ){
+                    var game_id = link.attr('href').replace('https://store.steampowered.com/app/', '').replace('/', '');
+                    game_id = link.attr('href').replace('http://store.steampowered.com/app/', '').replace('/', '');
+                    //console.log(game_id);
+                    if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
+                        console.log(game_id + ' ignorado');
+                        //game.css('border', '10px solid red');
+                        game.css('display', 'none');
+                    }
+                    else{
+                        console.log(game_id + ' ok');
+                    }
                 }
 
             });

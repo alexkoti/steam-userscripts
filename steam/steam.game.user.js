@@ -17,15 +17,17 @@
  * 
  */
 
-(function() {
+ (function() {
     'use strict';
 
     console.log('single add tags init');
 
     var $ = window.jQuery;
 
+    $('a[href="https://store.steampowered.com/sale/nextfest"], [data-featuretarget="broadcast-embed"]').hide();
+
     var appid = $('.glance_tags.popular_tags').attr('data-appid');
-    $('.glance_tags_ctn').append('<p id="my-custom-tags">Custom actions: <br /><span class="app_tag add-custom-tag nice">nice</span><span class="app_tag add-custom-tag masomen">masomen</span><span class="app_tag add-custom-tag Meh">Meh</span><span class="app_tag add-custom-tag Nah">Nah</span><span class="app_tag add-custom-tag Brasil">Brasil</span><span class="app_tag add-custom-tag Itchio!">Itchio!</span></p>');
+    $('.glance_tags_ctn').append('<p id="my-custom-tags">Custom actions: <br /><span class="app_tag add-custom-tag nice">nice</span><span class="app_tag add-custom-tag masomen">masomen</span><span class="app_tag add-custom-tag Meh">Meh</span><span class="app_tag add-custom-tag Nah">Nah</span><span class="app_tag add-custom-tag Brasil">Brasil</span><span class="app_tag add-custom-tag Itchio!">Itchio!</span><span class="app_tag add-custom-tag">Game Pass</span></p>');
 
     $('.add-custom-tag').on('click', function(){
         var tag = $(this).text();

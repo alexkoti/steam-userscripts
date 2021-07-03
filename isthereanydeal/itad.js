@@ -1,7 +1,6 @@
 // ==UserScript==
 // @name         AHK - IsThereAnyDeal Hide Owneds & Ignoreds
 // @namespace    https://github.com/alexkoti/steam-userscripts
-// @homepage     https://github.com/alexkoti/steam-userscripts
 // @version      1.0.0
 // @description  In ITAD, fade all games ignored by user in Steam.
 // @author       Alex Koti
@@ -36,9 +35,15 @@
                     if( game_id != undefined ){
                         game_id = game_id.replace('app/', '');
                     }
+                    console.log(game_id);
+                    if( game_id != undefined && game_id.includes('sub/') ){
+                        game.css({
+                            'opacity' : 0.2,
+                        });
+                    }
                     if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
                         console.log( '❌ ignore:' + game_id );
-                        game.css('opacity', 0.2);
+                        game.hide();
                     }
                     if( user_data.rgOwnedApps.includes( Number(game_id) ) ){
                         console.log( '✅ owned:' + game_id );
