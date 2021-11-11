@@ -56,7 +56,7 @@
                 row.hide();
                 return;
             }
-            var tag_pos = $(this).find('.responsive_search_name_combined p');
+            var tag_pos = $(this).find('.responsive_search_name_combined .ellipsis div:first-of-type');
             // existe tag de ignore?
             var ignore = $(this).find('.es_tag_notinterested');
             if( ignore.length ){
