@@ -47,13 +47,13 @@
                 //console.log(game_id);
                 if( user_data.rgIgnoredApps.hasOwnProperty(game_id) || game.find('.tbl').length > 0 ){
                     console.log(game_id + ' ignored');
-                    game.css('opacity', 0.2);
+                    game.addClass('ignored').css('opacity', 0.2);
                 }
 
                 // owneds?
                 if( game.find('i.tli').length > 0 ){
                     console.log(game_id + ' owned');
-                    game.css({
+                    game.addClass('owned').css({
                         'border': '1px solid green',
                         'background-color': 'rgba(0, 128, 0, 0.5)',
                         'opacity' : 1,
