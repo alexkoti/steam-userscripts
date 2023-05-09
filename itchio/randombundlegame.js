@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AHK - Itchio Bundles Check
 // @namespace    http://randombundlegame.com
-// @version      0.1
+// @version      0.1.1
 // @description  Sinalizar jogos do Steam
 // @author       You
 // @match        https://randombundlegame.com/*
@@ -34,12 +34,15 @@
 
     function update_game_data(){
         console.log( user_data.rgOwnedApps );
-        $('article div.text-xs > a:first-child').each(function(){
+        $('article > div.mt-auto > a[href*="https://store.steampowered.com"]').each(function(){
+            //console.log($(this));
             var link = $(this).attr('href').replace('http://', '').replace('https://', '').replace('store.steampowered.com/app/', '');
             var game_id = link.split('/')[0];
+
             // owned
             if( user_data.rgOwnedApps.indexOf(Number(game_id)) != -1 ){
-                console.log(game_id);
+                //console.log(game_id);
+                //console.log($(this).closest('article').find('h1').text());
                 $(this).closest('article').css('background-color', '#7dc110');
             }
             // ignoreds
