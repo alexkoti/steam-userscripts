@@ -7,7 +7,7 @@
 // @downloadURL  https://github.com/alexkoti/steam-userscripts/raw/master/steamgifts/steamgifts.user.js
 // @updateURL    https://github.com/alexkoti/steam-userscripts/raw/master/steamgifts/steamgifts.user.js
 // @supportURL   https://github.com/alexkoti/steam-userscripts/issues
-// @match        https://www.steamgifts.com/
+// @match        https://www.steamgifts.com/*
 // @grant        GM_xmlhttpRequest
 // @connect      steampowered.com
 // ==/UserScript==
@@ -28,7 +28,7 @@
                 //console.log( jQuery(this) );
                 var game = jQuery(this);
                 var link = game.find('.giveaway__icon:first');
-                var game_id = link.attr('href').replace('https://store.steampowered.com/app/', '').replace('/', '');
+                var game_id = link.attr('href').replace('https://store.steampowered.com/app/', '').replace('/', '').replace('?utm_source=SteamGifts', '');
                 console.log(game_id);
                 if( user_data.rgIgnoredApps.hasOwnProperty(game_id) ){
                     console.log(game_id + ' ignorado');
