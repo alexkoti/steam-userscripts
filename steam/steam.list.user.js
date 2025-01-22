@@ -8,7 +8,6 @@
 // @updateURL    https://github.com/alexkoti/steam-userscripts/raw/master/steam/steam.list.user.js
 // @supportURL   https://github.com/alexkoti/steam-userscripts/issues
 // @match        https://store.steampowered.com/search/*
-// @include      https://store.steampowered.com/search/*
 // @grant        none
 // ==/UserScript==
 
@@ -54,6 +53,7 @@
             if( row.is('.ds_ignored') ){
                 console.log( '❌ ignore:' + title );
                 row.hide();
+                //row[0].style.setProperty('opacity', '0.5', 'important'); // apenas mudar opacidade dos ignorados
                 return;
             }
             var tag_pos = $(this).find('.responsive_search_name_combined .ellipsis div:first-of-type');

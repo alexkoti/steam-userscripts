@@ -17,7 +17,7 @@
  * 
  */
 
- (function() {
+(function() {
     'use strict';
 
     console.log('single add tags init');
