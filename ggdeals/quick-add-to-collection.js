@@ -20,7 +20,7 @@
     console.log(token.attr('content'));
 
     var actions = game.find('.game-heading h1');
-    jQuery('.breadcrumbs-widget .container').append('<div class="custom-actions"><div class="btn custom-add" data-drm="1024">+ EPIC</div><div class="btn custom-add" data-drm="4096">+ AMAZON</div><div class="btn custom-add" data-drm="2">+ EA</div><div class="btn custom-add" data-drm="4">+ UBISOFT</div></div>');
+    jQuery('.breadcrumbs-widget .container').append('<div class="custom-actions"><div class="btn custom-add" data-drm="1">+ STEAM</div><div class="btn custom-add" data-drm="1024">+ EPIC</div><div class="btn custom-add" data-drm="4096">+ AMAZON</div><div class="btn custom-add" data-drm="2">+ EA</div><div class="btn custom-add" data-drm="4">+ UBISOFT</div></div>');
     jQuery('.custom-actions .custom-add').on('click', function(){
         var drm = jQuery(this).attr('data-drm');
         //console.log(drm);
