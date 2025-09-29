@@ -5,6 +5,7 @@
 // @description  Sinalizar jogos do Steam
 // @author       You
 // @match        https://randombundlegame.com/*
+// @match        https://store.steampowered.com/dynamicstore/userdata/
 // @icon         https://www.google.com/s2/favicons?domain=randombundlegame.com
 // @grant        GM_xmlhttpRequest
 // @connect      steampowered.com
@@ -28,6 +29,10 @@
         }
     } );
 
+    /**
+     * Cliar no link de paginação irá atualizar a lista conforme os itens da biblioteca steam
+     *
+     */
     $('body').on('click', 'button.p-1', function(){
         update_game_data();
     });
