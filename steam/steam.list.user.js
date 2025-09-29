@@ -56,7 +56,7 @@
                 //row[0].style.setProperty('opacity', '0.5', 'important'); // apenas mudar opacidade dos ignorados
                 return;
             }
-            var tag_pos = $(this).find('.responsive_search_name_combined .ellipsis div:first-of-type');
+            var tag_pos = $(this).find('.search_platforms');
             // existe tag de ignore?
             var ignore = $(this).find('.es_tag_notinterested');
             if( ignore.length ){
@@ -251,23 +251,23 @@
                                     thumbs.appendTo( row );
 
                                     // botão de remover thumbs ⏹️
-                                    var remove_thumbs = $('<div class="ignore" style="position: absolute;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">⏹️</div>');
-                                    remove_thumbs.on('click', function(event){
-                                        event.preventDefault();
-                                        console.log('stop thumbs! ' + appID);
-                                        thumbs.remove();
-                                    }).appendTo( thumbs );
+                                    //var remove_thumbs = $('<div class="ignore" style="position: absolute;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">⏹️</div>');
+                                    //remove_thumbs.on('click', function(event){
+                                    //    event.preventDefault();
+                                    //    console.log('stop thumbs! ' + appID);
+                                    //    thumbs.remove();
+                                    //}).appendTo( row );
 
-                                    // botão reload thumbs 🔄
-                                    var reload_thumbs = $('<div class="ignore" style="position: absolute;top: 45px;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">🔄</div>');
-                                    reload_thumbs.on('click', function(event){
-                                        event.preventDefault();
-                                        console.log('reload thumbs! ' + appID);
-                                        thumbs.find('.screenshot img').each(function(){
-                                            var osrc = $(this).attr('src');
-                                            $(this).attr('src', osrc + Date.now());
-                                        });
-                                    }).appendTo( thumbs );
+                                    //// botão reload thumbs 🔄
+                                    //var reload_thumbs = $('<div class="ignore" style="position: absolute;top: 45px;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">🔄</div>');
+                                    //reload_thumbs.on('click', function(event){
+                                    //    event.preventDefault();
+                                    //    console.log('reload thumbs! ' + appID);
+                                    //    thumbs.find('.screenshot img').each(function(){
+                                    //        var osrc = $(this).attr('src');
+                                    //        $(this).attr('src', osrc + Date.now());
+                                    //    });
+                                    //}).appendTo( row );
                                     games_info[appID]['thumbs'] = thumbs;
                                 }
                             });
