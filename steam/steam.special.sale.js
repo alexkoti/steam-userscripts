@@ -29,7 +29,7 @@
 
     function special_sale_game_info(){
         console.log('special sale!');
-        $('._1dKR2IPNQSHs1MAIXBvt_R, ._1dKR2IPNQSHs1MAIXBvt_R').each(function(){
+        $('._1dKR2IPNQSHs1MAIXBvt_R, ._3r4Ny9tQdQZc50XDM5B2q2, ._1_P15GG6AKyF_NMX2j4-Mu').each(function(){
 
             var game = $(this);
 
@@ -37,10 +37,10 @@
             var game_link = game.find('a').attr('href');
             var gameinfo  = game_link.replace('https://store.steampowered.com/app/', '').split('/');
             var appID     = gameinfo[0]
-            var gameslug  = gameinfo[1].split('?')[0];
+            var title  = gameinfo[1].split('?')[0];
             //console.log(gameinfo);
             //console.log(gameid);
-            //console.log(gameslug);
+            //console.log(title);
 
             var tag_pos = game.find('._2bCf9u4rlC8De687HY6wnh');
 
@@ -50,10 +50,11 @@
                 is_sub = true;
             }
 
-            if( game.find('._2gxv9cF-4n9wq4yxruOTNl') ){
-                console.log( '✅ owned:' + gameslug );
-                return;
-            }
+            //if( game.find('._2o-5t6bgEJxfbWVSmxT88V') ){
+            //    console.log( game );
+            //    console.log( '✅ owned:' + title );
+            //    return;
+            //}
 
             if( game.attr('data-request-init') == 1 ){
                 console.log('já iniciado');
@@ -61,7 +62,7 @@
             }
             game.attr('data-request-init', 1);
 
-            
+
             if( !games_info.hasOwnProperty(appID) ){
                 console.warn('cadastrar novo appID');
                 games_info[appID] = {
