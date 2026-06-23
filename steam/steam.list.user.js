@@ -174,7 +174,7 @@
 
                         // add ignore button ❌
                         if( is_sub == false ){
-                            var btn_ignore = $('<div class="ignore" style="position: absolute;top: 0;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">❌</div>');
+                            var btn_ignore = $('<div class="ignore ahk-ignore-button" style="position: absolute;top: 0;left: -45px;width: 45px;height: 45px;line-height: 42px;text-align: center;font-size: 30px;font-family: monospace;color: #fff;">❌</div>');
                             btn_ignore.on('click', function(event){
                                 event.preventDefault();
                                 console.log('ignore!');
@@ -213,6 +213,7 @@
                             $.ajax({
                                 url: 'https://store.steampowered.com/apphover/' + appID,
                                 type: 'GET',
+                                cache: true,
                                 success: function(gres) {
                                     console.log('thumbs!!!');
                                     var thumbs = $(gres).find('.hover_screenshots');
@@ -221,7 +222,7 @@
                                         //'overflow' : 'hidden',
                                         'position' : 'relative',
                                         'width'    : '100%',
-                                        'height'   : '100px',
+                                        'height'   : '118px',
                                         'margin'   : '0 0 30px',
                                         'display'  : 'block',
                                     });
@@ -311,6 +312,22 @@
             });
             update_user_tags();
         }, 2000);
+    });
+
+    // add ignore all button in search box
+    $('.termcontainer').append('<button id="ahk-ignore-all" style="padding:2px 8px 4px 9px;color:#fff;background:red;border:none;">ignore all ☺</button>');
+
+    // add .hold-ignore in case you middle-click to open the game, so will not be mass ignored afterwards
+    $('.search_result_row').on('auxclick', function(){
+        $(this).addClass('hold-ignore');
+    });
+
+    $('#ahk-ignore-all').on('click', function(){
+        // test:
+        //$('.search_result_row:not(.hold-ignore, :has(.app_tag)) .ahk-ignore-button').css('outline', '1px dashed red');
+
+        // ignore all remaining games on page
+        $('.search_result_row:not(.hold-ignore, :has(.app_tag)) .ahk-ignore-button').trigger('click');
     });
 
 })();
