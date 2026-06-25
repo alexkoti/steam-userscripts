@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AHK - Artfinder Highlights
 // @namespace    artfinder
-// @version      0.1
+// @version      0.1.1
 // @description  Highlight sold itens and more
 // @author       You
 // @match        https://www.artfinder.com/*
@@ -43,7 +43,7 @@
 
     function highlight_sold(){
         console.log('highlight_sold');
-        jQuery('.product-tag-sold').closest('.product-card').css({
+        jQuery('.sc-77428a09-0.eFvwf').closest('[data-testid="productCard"]').css({
             'border': '2px solid #ff0000',
             'box-shadow': '0 0 10px #ff0000',
         });
